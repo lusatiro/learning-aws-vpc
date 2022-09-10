@@ -1,13 +1,20 @@
 import * as cdk from "aws-cdk-lib";
 import { Construct } from "constructs";
 import * as ec2 from "aws-cdk-lib/aws-ec2";
-import { SubnetType } from "aws-cdk-lib/aws-ec2";
+import {
+  InstanceClass,
+  InstanceSize,
+  InstanceType,
+  MachineImage,
+  SubnetType,
+} from "aws-cdk-lib/aws-ec2";
+import { MachineImageType } from "aws-cdk-lib/aws-ecs";
 
 export class LearningAwsVpcStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
-    new ec2.Vpc(this, "my-vpc", {
+    const vpc = new ec2.Vpc(this, "my-vpc", {
       vpcName: "lucas-vpc",
       cidr: "10.0.0.0/26",
       maxAzs: 2,
@@ -23,6 +30,15 @@ export class LearningAwsVpcStack extends cdk.Stack {
           cidrMask: 28,
         },
       ],
+    });
+
+    new ec2.Instance(this, "my-instance", {
+      vpc,
+      instanceType: InstanceType.of(
+        InstanceClass.BURSTABLE2,
+        InstanceSize.NANO
+      ),
+      machineImage: new ec2.AmazonLinuxImage(),
     });
   }
 }
