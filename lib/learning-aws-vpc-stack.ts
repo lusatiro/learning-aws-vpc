@@ -31,6 +31,7 @@ export class LearningAwsVpcStack extends cdk.Stack {
     });
 
     new ec2.Instance(this, "my-instance", {
+      instanceName: "my-instance",
       vpc,
       vpcSubnets: {
         subnetType: SubnetType.PUBLIC,
