@@ -15,7 +15,7 @@ export class LearningAwsVpcStack extends cdk.Stack {
     super(scope, id, props);
 
     const vpc = new ec2.Vpc(this, "my-vpc", {
-      vpcName: "lucas-vpc",
+      vpcName: "my-vpc",
       cidr: "10.0.0.0/26",
       maxAzs: 2,
       subnetConfiguration: [
@@ -34,6 +34,9 @@ export class LearningAwsVpcStack extends cdk.Stack {
 
     new ec2.Instance(this, "my-instance", {
       vpc,
+      vpcSubnets: {
+        subnetType: SubnetType.PUBLIC,
+      },
       instanceType: InstanceType.of(
         InstanceClass.BURSTABLE2,
         InstanceSize.NANO
