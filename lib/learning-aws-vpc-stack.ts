@@ -1,16 +1,28 @@
-import * as cdk from 'aws-cdk-lib';
-import { Construct } from 'constructs';
-// import * as sqs from 'aws-cdk-lib/aws-sqs';
+import * as cdk from "aws-cdk-lib";
+import { Construct } from "constructs";
+import * as ec2 from "aws-cdk-lib/aws-ec2";
+import { SubnetType } from "aws-cdk-lib/aws-ec2";
 
 export class LearningAwsVpcStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
-    // The code that defines your stack goes here
-
-    // example resource
-    // const queue = new sqs.Queue(this, 'LearningAwsVpcQueue', {
-    //   visibilityTimeout: cdk.Duration.seconds(300)
-    // });
+    new ec2.Vpc(this, "my-vpc", {
+      vpcName: "lucas-vpc",
+      cidr: "10.0.0.0/26",
+      maxAzs: 2,
+      subnetConfiguration: [
+        {
+          name: "my-private-subnet",
+          subnetType: SubnetType.PRIVATE_WITH_NAT,
+          cidrMask: 28,
+        },
+        {
+          name: "my-public-subnet",
+          subnetType: SubnetType.PUBLIC,
+          cidrMask: 28,
+        },
+      ],
+    });
   }
 }
