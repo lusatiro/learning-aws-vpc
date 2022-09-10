@@ -5,10 +5,8 @@ import {
   InstanceClass,
   InstanceSize,
   InstanceType,
-  MachineImage,
   SubnetType,
 } from "aws-cdk-lib/aws-ec2";
-import { MachineImageType } from "aws-cdk-lib/aws-ecs";
 
 export class LearningAwsVpcStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
