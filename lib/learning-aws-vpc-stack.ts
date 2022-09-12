@@ -13,7 +13,7 @@ export class LearningAwsVpcStack extends cdk.Stack {
     super(scope, id, props);
 
     const vpc = new ec2.Vpc(this, "learning-aws-vpc", {
-      vpcName: "my-vpc",
+      vpcName: "learning-aws-vpc",
       cidr: "10.0.0.0/26",
       maxAzs: 2,
       subnetConfiguration: [
